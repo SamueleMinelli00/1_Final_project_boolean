@@ -12,7 +12,7 @@ H0: treatment (second period) = control (first period)
 H1: treatment > control
 '''
 #Importing useful gdf created in main.py
-from main import year_semester_gdf, year_trimester_gdf, single_years_gdf
+from main import year_semester_gdf, year_trimester_gdf, single_years_gdf, merged_clusters_gdf
 #importing useful libraries
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -30,8 +30,7 @@ year_trimester_gdf = year_trimester_gdf[year_trimester_gdf['year'] != 2026]
 treatment_trimester = year_trimester_gdf[year_trimester_gdf['cluster_category'] != 0]
 control_trimester = year_trimester_gdf[year_trimester_gdf['cluster_category'] == 0]
 
-#display(treatment_trimester.head(16))
-print(control_trimester.head(16))
+#print(control_trimester.head(16))
 
 
 
@@ -122,10 +121,10 @@ year_semester_gdf = year_semester_gdf[year_semester_gdf['year'] != 2026]
 control_semester = year_semester_gdf[year_semester_gdf['cluster_category'] == 0]
 treatment_semester = year_semester_gdf[year_semester_gdf['cluster_category'] != 0]
 
-print('Control Semester Data:')
-display(control_semester.head())
-print('\nTreatment Semester Data:')
-display(treatment_semester.head())
+# print('Control Semester Data:')
+# print(control_semester.head())
+# print('\nTreatment Semester Data:')
+# print(treatment_semester.head())
 
 #Centroid_semester
 mu_control_semester_centroid = np.mean(control_semester['avg_dist_centroid_year_semester'])
@@ -198,5 +197,3 @@ print(f'p_value_semester_perimeter_percent: {p_value_semester_perimeter_percent}
 the p-value < alpha: 
 the difference between treatment (second period) and control (first period) is statistically significant, H0 is refuted.
 '''
-
-
