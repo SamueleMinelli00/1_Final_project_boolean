@@ -54,9 +54,6 @@ ACLED_to_WAP_clean = ACLED_to_WAP_clean[
     (ACLED_to_WAP_clean['actor2'] == 'JNIM: Group for Support of Islam and Muslims')
     ]
 
-# display(ACLED_to_WAP_clean['actor1'].unique())
-# display(ACLED_to_WAP_clean['actor2'].unique())
-
 #print(ACLED_to_WAP_clean.info())
 
 ###Dropping unnecessary Sub Event Types (SETs)
@@ -72,11 +69,41 @@ ACLED_to_WAP_clean = ACLED_to_WAP_clean[~ACLED_to_WAP_clean['SET'].isin(SET_to_d
 ###convert event_date to datetime
 ACLED_to_WAP_clean['event_date'] = pd.to_datetime(ACLED_to_WAP_clean['event_date'])
 
-###extract month and calculate trimester
+###extract month and calculate TRIMESTER
 # Extract month and calculate trimester
 ACLED_to_WAP_clean['month'] = ACLED_to_WAP_clean['event_date'].dt.month
 ACLED_to_WAP_clean['trimester'] = ((ACLED_to_WAP_clean['month'] - 1) // 3) + 1
+# Combine trimester and year
 ACLED_to_WAP_clean['year_trimester'] = ACLED_to_WAP_clean['event_date'].dt.strftime('%Y') + '-Q' + ACLED_to_WAP_clean['event_date'].dt.quarter.astype(str)
 
-print("DataFrame with 'month', 'trimester', and 'year_trimester' columns:")
-print(ACLED_to_WAP_clean[['event_date', 'month', 'trimester', 'year_trimester']].head())
+#print(ACLED_to_WAP_clean.head())
+#print(ACLED_to_WAP_clean.info())
+
+###calculate SEMESTER
+ACLED_to_WAP_clean['semester'] = ((ACLED_to_WAP_clean['month']-1)//6) +1
+# Combine semester and year
+ACLED_to_WAP_clean['year_semester'] = ACLED_to_WAP_clean['event_date'].dt.strftime('%Y') + '-S' + ACLED_to_WAP_clean['semester'].astype(str)
+#print(ACLED_to_WAP_clean.head(5))
+
+###Move columns
+# Get the current list of columns
+current_columns = ACLED_to_WAP_clean.columns.tolist()
+
+# Define the new order for the temporal columns
+# Remove them from their current position and insert them after 'event_date'
+columns_to_move = ['month', 'trimester', 'year_trimester', 'semester', 'year_semester']
+
+for col in columns_to_move:
+    if col in current_columns:
+        current_columns.remove(col)
+
+# Find the index of 'event_date'
+event_date_index = current_columns.index('event_date')
+
+# Insert the temporal columns after 'event_date'
+new_columns_order = current_columns[:event_date_index + 1] + columns_to_move + current_columns[event_date_index + 1:]
+
+# Reindex the DataFrame with the new column order
+ACLED_to_WAP_clean = ACLED_to_WAP_clean[new_columns_order]
+
+print(ACLED_to_WAP_clean[ACLED_to_WAP_clean['trimester'] == 3].head(10))
