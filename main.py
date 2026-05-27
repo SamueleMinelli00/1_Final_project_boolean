@@ -192,6 +192,6 @@ for y in years:
 
 
 single_years_gdf = gpd.GeoDataFrame(yearly_data)
-# print("\nSingle Years GeoDataFrame:")
-# print(single_years_gdf.head(9))
+print("\nSingle Years GeoDataFrame:")
+print(single_years_gdf.head(9))
 
