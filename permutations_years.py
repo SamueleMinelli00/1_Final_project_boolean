@@ -17,7 +17,7 @@ H1: treatment > control
 ##
 
 #Importing useful gdf created in main.py
-from main import merged_clusters_gdf
+from main import single_years_gdf
 #importing useful libraries
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -27,11 +27,11 @@ import numpy as np
 import seaborn as sns
 
 
-merged_clusters_gdf = merged_clusters_gdf[merged_clusters_gdf['year'] != 2026] #removing 2026 as it is not a full year and would bias the results and it would create two clusters with different dimensions
+single_years_gdf = single_years_gdf[single_years_gdf['year'] != 2026] #removing 2026 as it is not a full year and would bias the results and it would create two clusters with different dimensions
 
 
-control_year = merged_clusters_gdf[merged_clusters_gdf['cluster_category'] == 0]
-treatment_year = merged_clusters_gdf[merged_clusters_gdf['cluster_category'] != 0]
+control_year = single_years_gdf[single_years_gdf['cluster_category'] == 0]
+treatment_year = single_years_gdf[single_years_gdf['cluster_category'] != 0]
 
 
 #Centroid_year

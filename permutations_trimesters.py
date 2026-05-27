@@ -17,7 +17,7 @@ H1: treatment > control
 ##
 
 #Importing useful gdf created in main.py
-from main import year_semester_gdf, year_trimester_gdf, single_years_gdf, merged_clusters_gdf
+from main import year_trimester_gdf
 #importing useful libraries
 import pandas as pd
 import matplotlib.pyplot as plt
