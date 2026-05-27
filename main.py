@@ -39,8 +39,10 @@ ACLED_to_WAP_clean.rename(columns={
    'HubDist': 'distance_to_centroid_km',
    'distance_to_perimeter': 'distance_to_perimeter_km',
    'sub_event_': 'SET',
-   'event_id_c': 'event_id'
+   'event_id_c': 'event_id',
+   'fataliti_1': 'fat_precision'
 }, inplace=True)
+
 #print(ACLED_to_WAP_clean.info())
 
 ###convert distances into km (float) with two decimal numbers
@@ -107,3 +109,89 @@ new_columns_order = current_columns[:event_date_index + 1] + columns_to_move + c
 ACLED_to_WAP_clean = ACLED_to_WAP_clean[new_columns_order]
 
 print(ACLED_to_WAP_clean[ACLED_to_WAP_clean['trimester'] == 3].head(10))
+
+##
+###Calculate the mean distance to the centroid and perimeter for each trimester, semester and year
+##
+
+trimesters = ACLED_to_WAP_clean['year_trimester'].unique()
+semesters = ACLED_to_WAP_clean['year_semester'].unique()
+print(semesters)
+
+##SEMESTERS
+semester_data = []
+for s in semesters:
+  current_year = int(s.split('-')[0]) # Extract the year for the current semester
+  avg_dist_centroid_year_semester = ACLED_to_WAP_clean[ACLED_to_WAP_clean['year_semester'] == s]['distance_to_centroid_km'].mean().round(2)
+  avg_dist_perimeter_year_semester = ACLED_to_WAP_clean[ACLED_to_WAP_clean['year_semester'] == s]['distance_to_perimeter_km'].mean().round(2)
+
+  # Determine cluster_category based on the current_year
+  if current_year > 2021:
+    cluster_cat = 1
+  else:
+    cluster_cat = 0
+
+  semester_data.append({
+   'year': current_year,
+   'semester': s,
+   'avg_dist_centroid_year_semester': avg_dist_centroid_year_semester,
+   'avg_dist_perimeter_year_semester': avg_dist_perimeter_year_semester,
+   'cluster_category': cluster_cat # Add cluster_category to the dictionary
+  })
+
+year_semester_gdf = gpd.GeoDataFrame(semester_data)
+year_semester_gdf.sort_values(by='semester', inplace=True)
+year_semester_gdf = year_semester_gdf.reset_index(drop=True)
+#print(year_semester_gdf.head(33))
+
+##TRIMESTERS
+trimester_data = []
+for t in trimesters:
+  current_year = int(t.split('-')[0]) # Extract the year for the current trimester
+  avg_dist_centroid_year_trimester = ACLED_to_WAP_clean[ACLED_to_WAP_clean['year_trimester'] == t]['distance_to_centroid_km'].mean().round(2)
+  avg_dist_perimeter_year_trimester = ACLED_to_WAP_clean[ACLED_to_WAP_clean['year_trimester'] == t]['distance_to_perimeter_km'].mean().round(2)
+
+  # Determine cluster_category based on the current_year
+  if current_year > 2021:
+    cluster_cat = 1
+  else:
+    cluster_cat = 0
+
+  trimester_data.append({
+   'year': current_year,
+   'trimester': t,
+   'avg_dist_centroid_year_trimester': avg_dist_centroid_year_trimester,
+   'avg_dist_perimeter_year_trimester': avg_dist_perimeter_year_trimester,
+   'cluster_category': cluster_cat
+  })
+
+year_trimester_gdf = gpd.GeoDataFrame(trimester_data)
+year_trimester_gdf.sort_values(by='trimester', inplace=True)
+year_trimester_gdf = year_trimester_gdf.reset_index(drop=True)
+#print(year_trimester_gdf.head(33))
+
+##YEAR
+years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
+
+yearly_data = []
+for y in years:
+  avg_dist_centroid_year = ACLED_to_WAP_clean[ACLED_to_WAP_clean['year'] == y]['distance_to_centroid_km'].mean().round(2)
+  avg_dist_perimeter_year = ACLED_to_WAP_clean[ACLED_to_WAP_clean['year'] == y]['distance_to_perimeter_km'].mean().round(2)
+  # Determine cluster_category based on the y
+  if y > 2021:
+    cluster_cat = 1
+  else:
+    cluster_cat = 0
+  
+  yearly_data.append({
+      'year': y,
+      'avg_dist_centroid_year': avg_dist_centroid_year,
+      'avg_dist_perimeter_year': avg_dist_perimeter_year,
+      'cluster_category': cluster_cat
+  })
+
+
+single_years_gdf = gpd.GeoDataFrame(yearly_data)
+# print("\nSingle Years GeoDataFrame:")
+# print(single_years_gdf.head(9))
+
