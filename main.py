@@ -19,3 +19,5 @@ print(distances_to_WAP_centroid.head(5))
 distances_to_WAP_centroid.info()
 print(net_distances_to_WAP.head(5))
 net_distances_to_WAP.info()
+
+print('')
