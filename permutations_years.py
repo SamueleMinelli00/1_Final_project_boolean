@@ -18,6 +18,7 @@ H1: treatment > control
 
 #Importing useful gdf created in main.py
 from main import single_years_gdf
+from permutations_trimesters import results_gdf
 #importing useful libraries
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -100,6 +101,16 @@ p_value_year_perimeter = sum(mu_diff_samples_perimeter_year > mu_diff_year_perim
 print(f'p_value_year_perimeter: {p_value_year_perimeter}')
 p_value_year_perimeter_percent = (p_value_year_perimeter * 100).round(2)
 print(f'p_value_year_perimeter_percent: {p_value_year_perimeter_percent} %')
+
+#appending results to the results_gdf
+results_gdf.append({
+  'mu_diff_year_centroid': mu_diff_year_centroid,
+  'mu_diff_year_perimeter': mu_diff_year_perimeter,
+  'p_value_year_centroid': p_value_year_centroid,
+  'p_value_year_centroid_percent': p_value_year_centroid_percent,
+  'p_value_year_perimeter': p_value_year_perimeter,
+  'p_value_year_perimeter_percent': p_value_year_perimeter_percent
+})
 
 '''
 the p-value < alpha only for the centroid distances: the difference between treatment (second period) and control (first period) is statistically significant, H0 is refuted.

@@ -19,6 +19,7 @@ H1: treatment > control
 
 #Importing useful gdf created in main.py
 from main import year_semester_gdf
+from permutations_trimesters import results_gdf
 #importing useful libraries
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -103,6 +104,15 @@ p_value_semester_perimeter = sum(mu_diff_samples_perimeter_semester > mu_diff_se
 print(f'p_value_semester_perimeter: {p_value_semester_perimeter}')
 p_value_semester_perimeter_percent = (p_value_semester_perimeter * 100).round(2)
 print(f'p_value_semester_perimeter_percent: {p_value_semester_perimeter_percent} %')
+
+results_gdf.append({
+  'mu_diff_semester_centroid': mu_diff_semester_centroid,
+  'mu_diff_semester_perimeter': mu_diff_semester_perimeter,
+  'p_value_semester_centroid': p_value_semester_centroid,
+  'p_value_semester_centroid_percent': p_value_semester_centroid_percent,
+  'p_value_semester_perimeter': p_value_semester_perimeter,
+  'p_value_semester_perimeter_percent': p_value_semester_perimeter_percent
+})
 
 '''
 the p-value < alpha: 

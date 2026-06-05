@@ -28,6 +28,8 @@ import seaborn as sns
 
 
 year_trimester_gdf = year_trimester_gdf[year_trimester_gdf['year'] != 2026]
+results_gdf = []
+results_gdf = pd.DataFrame(results_gdf)
 
 treatment_trimester = year_trimester_gdf[year_trimester_gdf['cluster_category'] != 0]
 control_trimester = year_trimester_gdf[year_trimester_gdf['cluster_category'] == 0]
@@ -42,6 +44,8 @@ print(mu_treatment_trimester_centroid)
 mu_diff_trimester_centroid = (mu_treatment_trimester_centroid - mu_control_trimester_centroid).round(2)
 print(mu_diff_trimester_centroid)
 print(f'mu_diff_trimester_centroid: {mu_diff_trimester_centroid}')
+
+
 
 
 #Perimeter
@@ -106,6 +110,16 @@ p_value_trimester_perimeter = sum(mu_diff_samples_perimeter>mu_diff_trimester_pe
 print(f'p_value_trimester_perimeter: {p_value_trimester_perimeter}')
 p_value_trimester_perimeter_percent = (p_value_trimester_perimeter*100).round(2)
 print(f'p_value_trimester_perimeter_percent: {p_value_trimester_perimeter_percent} %')
+
+#Appending results to the results_gdf
+results_gdf.append({
+  'mu_diff_trimester_centroid': mu_diff_trimester_centroid,
+  'mu_diff_trimester_perimeter': mu_diff_trimester_perimeter,
+  'p_value_trimester_centroid': p_value_trimester_centroid,
+  'p_value_trimester_centroid_percent': p_value_trimester_centroid_percent,
+  'p_value_trimester_perimeter': p_value_trimester_perimeter,
+  'p_value_trimester_perimeter_percent': p_value_trimester_perimeter_percent
+})
 
 '''
 p-value < alpha: 
