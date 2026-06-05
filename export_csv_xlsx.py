@@ -21,8 +21,8 @@ print(f"ACLED_to_WAP_clean exported to XLSX at: {xlsx_output_path}")
 # print(ACLED_to_WAP_clean.info())
 
 # Exporting result_gdf as CSV and XLSX
-xlsx_output_path = r'C:\Users\183632\OneDrive\Culture\0-UNI\2025-26_Boolean\Data Analytics\6_Final project\1_Final_project_boolean\Data\results_gdf.xlsx'
-results_gdf.to_excel(xlsx_output_path, index=False)
+xlsx_output_path_results_gdf = r'C:\Users\183632\OneDrive\Culture\0-UNI\2025-26_Boolean\Data Analytics\6_Final project\1_Final_project_boolean\Data\results_gdf.xlsx'
+results_gdf.to_excel(xlsx_output_path_results_gdf, index=False)
 
-print(f"results_gdf exported to XLSX at: {xlsx_output_path}")
+print(f"results_gdf exported to XLSX at: {xlsx_output_path_results_gdf}")
 

@@ -112,14 +112,14 @@ p_value_trimester_perimeter_percent = (p_value_trimester_perimeter*100).round(2)
 print(f'p_value_trimester_perimeter_percent: {p_value_trimester_perimeter_percent} %')
 
 #Appending results to the results_gdf
-results_gdf.append({
+results_gdf = pd.concat([results_gdf, pd.DataFrame([{
   'mu_diff_trimester_centroid': mu_diff_trimester_centroid,
   'mu_diff_trimester_perimeter': mu_diff_trimester_perimeter,
   'p_value_trimester_centroid': p_value_trimester_centroid,
   'p_value_trimester_centroid_percent': p_value_trimester_centroid_percent,
   'p_value_trimester_perimeter': p_value_trimester_perimeter,
   'p_value_trimester_perimeter_percent': p_value_trimester_perimeter_percent
-})
+}])], ignore_index=True)
 
 '''
 p-value < alpha: 

@@ -103,14 +103,14 @@ p_value_year_perimeter_percent = (p_value_year_perimeter * 100).round(2)
 print(f'p_value_year_perimeter_percent: {p_value_year_perimeter_percent} %')
 
 #appending results to the results_gdf
-results_gdf.append({
+results_gdf = pd.concat([results_gdf, pd.DataFrame([{
   'mu_diff_year_centroid': mu_diff_year_centroid,
   'mu_diff_year_perimeter': mu_diff_year_perimeter,
   'p_value_year_centroid': p_value_year_centroid,
   'p_value_year_centroid_percent': p_value_year_centroid_percent,
   'p_value_year_perimeter': p_value_year_perimeter,
   'p_value_year_perimeter_percent': p_value_year_perimeter_percent
-})
+}])], ignore_index=True)
 
 '''
 the p-value < alpha only for the centroid distances: the difference between treatment (second period) and control (first period) is statistically significant, H0 is refuted.

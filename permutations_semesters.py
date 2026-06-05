@@ -105,14 +105,14 @@ print(f'p_value_semester_perimeter: {p_value_semester_perimeter}')
 p_value_semester_perimeter_percent = (p_value_semester_perimeter * 100).round(2)
 print(f'p_value_semester_perimeter_percent: {p_value_semester_perimeter_percent} %')
 
-results_gdf.append({
+results_gdf = pd.concat([results_gdf, pd.DataFrame([{
   'mu_diff_semester_centroid': mu_diff_semester_centroid,
   'mu_diff_semester_perimeter': mu_diff_semester_perimeter,
   'p_value_semester_centroid': p_value_semester_centroid,
   'p_value_semester_centroid_percent': p_value_semester_centroid_percent,
   'p_value_semester_perimeter': p_value_semester_perimeter,
   'p_value_semester_perimeter_percent': p_value_semester_perimeter_percent
-})
+}])], ignore_index=True)
 
 '''
 the p-value < alpha: 
