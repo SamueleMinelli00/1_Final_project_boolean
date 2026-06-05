@@ -18,7 +18,7 @@ H1: treatment > control
 
 #Importing useful gdf created in main.py
 from main import single_years_gdf
-from permutations_trimesters import results_gdf
+from permutations_semesters import results_gdf
 #importing useful libraries
 import pandas as pd
 import matplotlib.pyplot as plt
